@@ -2,7 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
-
+import { Button } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -45,13 +48,13 @@ class Landmarks extends React.Component {
 
 	render() {
 		return(
-			<div>
-        <h2> Submit entries for voting! </h2>
-			  <LandmarkSubmit trip={this.props.trip} fetch={this.fetch} user={this.props.user}></LandmarkSubmit>
-			  <br></br>
-			  <br></br>
-			  <LandmarksList user={this.props.user} fetch={this.fetch} landmarks={this.state.landmarks}></LandmarksList>
-			</div>
+      <Row>
+			<Col md={8} mdOffset={2}>
+        <h3> Submit entries for voting! </h3>
+			  <LandmarkSubmit trip={this.props.trip} fetch={this.fetch} user={this.props.user} />
+			  <LandmarksList user={this.props.user} fetch={this.fetch} landmarks={this.state.landmarks} />
+			</Col>
+      </Row>
 		)
 	}
 }
@@ -116,18 +119,24 @@ class LandmarkSubmit extends React.Component {
   render() {
 		return (
 			<div>
+        <div class="form-entry">
 	        <label>Description</label>
-	        <br></br>
-	        <input value={this.state.description} onChange={(e) => this.handleChange(e, 'description')} type="text"></input>
-	        <br></br>
+	        <input class="field" value={this.state.description} onChange={(e) => this.handleChange(e, 'description')} type="text"></input>
+        </div>
+
+        <div class="form-entry">
 	        <label>Address</label>
-	        <br></br>
-	        <input value={this.state.address} onChange={(e) => this.handleChange(e, 'address')} type="text"></input>
-	        <br></br>
+	        <input class="field" value={this.state.address} onChange={(e) => this.handleChange(e, 'address')} type="text"></input>
+        </div>
+
+        <div class="form-entry">
 	        <label>URL</label>
-	        <br></br>
-	        <input value={this.state.url} onChange={(e) => this.handleChange(e, 'url')} type="text"></input>
-	        <button onClick={this.submit}>Submit</button>
+	        <input class="field" value={this.state.url} onChange={(e) => this.handleChange(e, 'url')} type="text"></input>
+        </div>
+
+        <div class="form-entry">
+	        <Button onClick={this.submit}>Submit</Button>
+        </div>
 			</div>
 	  )
   }
@@ -140,7 +149,7 @@ const LandmarksList = (props) => {
   }
   return (
     <div>
-      <table>
+      <Table>
         <tbody>
         <tr>
           <th></th>
@@ -153,7 +162,7 @@ const LandmarksList = (props) => {
         { props.landmarks.map(landmark => <LandmarkEntry user={props.user} fetch={props.fetch} landmark={landmark} key={landmark.id}/>) }
         
         </tbody>
-      </table> 
+      </Table> 
 		</div>
 	);
 };
@@ -176,7 +185,7 @@ const LandmarkEntry = (props) => {
 	}
 	return (
     <tr>
-      <td><button onClick={handleClick}>vote</button></td>
+      <td><Button onClick={handleClick}>vote</Button></td>
       <td>{props.landmark.description}</td>
       <td><a href={props.landmark.url}>{props.landmark.url}</a></td>
       <td>{props.landmark.address}</td>
